@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Suraj Jyothi Unni — ML Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --ink:     #0D0F14;
+    --paper:   #F4F1EB;
+    --accent:  #E8651A;
+    --muted:   #7A7970;
+    --line:    #D8D4CC;
+    --card:    #EEEBE4;
+    --white:   #FAFAF8;
+    --mono:    'DM Mono', monospace;
+    --serif:   'DM Serif Display', serif;
+    --sans:    'Outfit', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE TEXTURE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 4rem;
+    background: rgba(244,241,235,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+  }
+  .hero-left {
+    padding: 7rem 4rem 4rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid var(--line);
+  }
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 2rem;
+    height: 1px;
+    background: var(--accent);
+  }
+  h1.hero-name {
+    font-family: var(--serif);
+    font-size: clamp(3.5rem, 6vw, 5.5rem);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+    color: var(--ink);
+  }
+  h1.hero-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .hero-title {
+    font-family: var(--mono);
+    font-size: 0.9rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 2.5rem;
+    border-left: 2px solid var(--accent);
+    padding-left: 1rem;
+  }
+  .hero-bio {
+    font-size: 1.05rem;
+    color: #3A3830;
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+  .hero-bio strong { color: var(--ink); font-weight: 600; }
+  .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.8rem 2rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--ink);
+    transition: all 0.25s;
+  }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--ink);
+    padding: 0.8rem 2rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--line);
+    transition: all 0.25s;
+  }
+  .btn-secondary:hover { border-color: var(--ink); }
+
+  .hero-right {
+    padding: 7rem 4rem 4rem 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  .stat-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 1.8rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+  .stat-card:hover { transform: translateX(4px); }
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--accent);
+  }
+  .stat-num {
+    font-family: var(--serif);
+    font-size: 2.8rem;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.3rem;
+  }
+  .stat-num span { color: var(--accent); }
+  .stat-label { font-family: var(--mono); font-size: 0.75rem; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ─── SECTION WRAPPER ─── */
+  section { padding: 6rem 4rem; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1.5rem;
+    margin-bottom: 3.5rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.15em;
+  }
+  h2.section-title {
+    font-family: var(--serif);
+    font-size: 2.4rem;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--white); border-top: 1px solid var(--line); }
+  .about-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 5rem; }
+  .about-body { font-size: 1.05rem; line-height: 1.9; color: #3A3830; }
+  .about-body p + p { margin-top: 1.2rem; }
+  .about-body strong { color: var(--ink); font-weight: 600; }
+  .about-aside { display: flex; flex-direction: column; gap: 2rem; }
+  .aside-block h4 {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .tag-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    padding: 0.25rem 0.65rem;
+    background: var(--card);
+    transition: all 0.2s;
+  }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ─── EXPERIENCE ─── */
+  #experience { background: var(--paper); }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-meta { padding-top: 0.3rem; }
+  .exp-period {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .exp-company {
+    font-size: 0.85rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .exp-loc { font-family: var(--mono); font-size: 0.68rem; color: var(--line); margin-top: 0.3rem; letter-spacing: 0.05em; }
+  .exp-content h3 {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    color: var(--ink);
+    margin-bottom: 0.8rem;
+  }
+  .exp-content .exp-desc { font-size: 0.95rem; color: #4A4840; line-height: 1.75; margin-bottom: 1.2rem; }
+  .exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .exp-bullets li {
+    font-size: 0.9rem;
+    color: #3A3830;
+    padding-left: 1.2rem;
+    position: relative;
+    line-height: 1.65;
+  }
+  .exp-bullets li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 0.8rem;
+  }
+  .exp-bullets li strong { color: var(--ink); font-weight: 600; }
+  .exp-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1.2rem; }
+  .exp-tag {
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    border: 1px solid rgba(232,101,26,0.3);
+    padding: 0.2rem 0.55rem;
+    background: rgba(232,101,26,0.04);
+  }
+
+  /* ─── PUBLICATIONS ─── */
+  #publications { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .pub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .pub-card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    padding: 2rem;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .pub-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(13,15,20,0.07); }
+  .pub-venue {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.7rem;
+  }
+  .pub-card h3 {
+    font-family: var(--serif);
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 1.3;
+    margin-bottom: 0.8rem;
+  }
+  .pub-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.65; }
+  .pub-card.patent { border-left: 3px solid var(--accent); }
+  .pub-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.2rem 0.6rem;
+    margin-top: 1rem;
+    text-transform: uppercase;
+  }
+  .pub-badge.pending { background: var(--accent); }
+
+  /* ─── SKILLS ─── */
+  #skills { background: var(--paper); }
+  .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .skill-group {
+    border: 1px solid var(--line);
+    padding: 2rem;
+    background: var(--white);
+  }
+  .skill-group h4 {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .skill-list { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+  .skill-list li { font-size: 0.88rem; color: #3A3830; display: flex; align-items: center; gap: 0.5rem; }
+  .skill-list li::before { content: '·'; color: var(--accent); font-size: 1.2rem; line-height: 1; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--ink); color: var(--paper); }
+  #contact .section-num { color: rgba(232,101,26,0.8); }
+  #contact h2.section-title { color: var(--paper); }
+  #contact .section-header { border-bottom-color: rgba(255,255,255,0.1); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-body { font-size: 1.05rem; color: rgba(244,241,235,0.7); line-height: 1.8; margin-bottom: 2rem; }
+  .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    letter-spacing: 0.05em;
+    color: rgba(244,241,235,0.6);
+    text-decoration: none;
+    padding: 1rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    transition: all 0.25s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-link .link-icon {
+    width: 1.4rem;
+    height: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+  }
+  .contact-right { padding-top: 1rem; }
+  .availability {
+    border: 1px solid rgba(232,101,26,0.4);
+    padding: 2rem;
+    background: rgba(232,101,26,0.05);
+  }
+  .avail-dot {
+    width: 8px; height: 8px;
+    background: #4CAF50;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 0.6rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .avail-label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #4CAF50;
+    margin-bottom: 0.8rem;
+  }
+  .avail-text { font-size: 0.9rem; color: rgba(244,241,235,0.6); line-height: 1.7; }
+
+  /* ─── ANIMATIONS ─── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  footer p { font-family: var(--mono); font-size: 0.7rem; color: rgba(244,241,235,0.25); letter-spacing: 0.05em; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; }
+    .hero-right { border-top: 1px solid var(--line); padding-top: 3rem; }
+    section { padding: 4rem 1.5rem; }
+    .about-grid, .contact-grid, .pub-grid, .skills-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .hero-left { padding: 5rem 1.5rem 2rem; }
+    .hero-right { padding: 2rem 1.5rem 4rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">SJU<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#publications">Research</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left fade-up">
+    <div class="hero-eyebrow">Machine Learning Engineer</div>
+    <h1 class="hero-name">Suraj<br/><em>Jyothi Unni</em></h1>
+    <div class="hero-title">LLM Systems · MLOps · Evaluation Infrastructure</div>
+    <p class="hero-bio">
+      Building and shipping <strong>LLM systems at scale</strong> — from RAG pipelines and agentic workflows to distributed eval infrastructure. 5+ years designing production ML that handles <strong>100K+ daily requests</strong> with measurable business impact.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://www.linkedin.com/in/surajjunni/" target="_blank" class="btn-primary">LinkedIn ↗</a>
+      <a href="mailto:surajjunni52@gmail.com" class="btn-secondary">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-right fade-up" style="transition-delay:0.15s">
+    <div class="stat-card">
+      <div class="stat-num">5<span>+</span></div>
+      <div class="stat-label">Years in production ML</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">100<span>K+</span></div>
+      <div class="stat-label">Daily requests at sub-100ms latency</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">40<span>%</span></div>
+      <div class="stat-label">Reduction in model release cycle time</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2</div>
+      <div class="stat-label">Published research papers + 1 patent in progress</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header fade-up">
+    <span class="section-num">01</span>
+    <h2 class="section-title">About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-body fade-up">
+      <p>
+        I'm a Senior Machine Learning Engineer at <strong>Twilio</strong>, where I own ML evaluation and release infrastructure for 50+ production models. I specialize in the full lifecycle of LLM systems — from fine-tuning foundation models to shipping reliable, scalable pipelines that stay trustworthy in production.
+      </p>
+      <p>
+        My work sits at the intersection of <strong>LLM engineering, evaluation science, and MLOps</strong>. I've built distributed benchmarking infrastructure that cut release cycles by 40%, RAG pipelines that reduced customer issue resolution time by 25%, and multi-modal anomaly detection systems reaching 82% alert precision at 100K-user scale.
+      </p>
+      <p>
+        Before Twilio, I completed a <strong>Master's in Computer Science at Arizona State University</strong> (GPA 3.75) while publishing research at EMNLP and SBP-BRiMS. My academic work focused on robustness in visual question answering — building evaluation benchmarks for domain generalization, a problem that continues to shape how I think about model reliability today.
+      </p>
+      <p>
+        I care deeply about evaluation not as a quality checkbox, but as the <strong>foundation of trust</strong> in AI systems. The best ML system isn't the one with the highest benchmark score — it's the one you can confidently deploy, monitor, and improve over time.
+      </p>
+    </div>
+    <div class="about-aside fade-up" style="transition-delay:0.1s">
+      <div class="aside-block">
+        <h4>Currently</h4>
+        <div class="tag-row">
+          <span class="tag">Senior MLE @ Twilio</span>
+          <span class="tag">California, USA</span>
+          <span class="tag">Oct 2024 – Present</span>
+        </div>
+      </div>
+      <div class="aside-block">
+        <h4>Core Expertise</h4>
+        <div class="tag-row">
+          <span class="tag">LLM Evaluation</span>
+          <span class="tag">RAG Pipelines</span>
+          <span class="tag">Agentic AI</span>
+          <span class="tag">Fine-tuning (RLHF, PEFT)</span>
+          <span class="tag">MLOps</span>
+          <span class="tag">Distributed Systems</span>
+          <span class="tag">Vector Databases</span>
+          <span class="tag">Anomaly Detection</span>
+        </div>
+      </div>
+      <div class="aside-block">
+        <h4>Education</h4>
+        <div class="tag-row">
+          <span class="tag">MS CS · ASU · 3.75 GPA</span>
+          <span class="tag">BTech CS · NIT Puducherry</span>
+        </div>
+      </div>
+      <div class="aside-block">
+        <h4>Contact</h4>
+        <div class="tag-row">
+          <span class="tag">surajjunni52@gmail.com</span>
+          <span class="tag">(602) 339-0539</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header fade-up">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Experience</h2>
+  </div>
+
+  <div class="exp-item fade-up">
+    <div class="exp-meta">
+      <div class="exp-period">Oct 2024 – Present</div>
+      <div class="exp-company">Twilio Inc.</div>
+      <div class="exp-loc">California, USA</div>
+    </div>
+    <div class="exp-content">
+      <h3>Senior Machine Learning Engineer</h3>
+      <p class="exp-desc">Lead ML evaluation, release infrastructure, and production LLM systems across the org.</p>
+      <ul class="exp-bullets">
+        <li>Owned <strong>ML eval and release OKRs for 50+ production models</strong> — built distributed benchmarking infrastructure (PyTorch, MLflow) that reduced release cycle time by 40% while maintaining quality thresholds.</li>
+        <li>Designed and deployed a <strong>real-time recommendation microservice</strong> via SageMaker with transformer embeddings and AWS Bedrock, handling 100K+ daily requests at sub-100ms latency and 99.9% uptime.</li>
+        <li>Built an <strong>LLM-agnostic internal knowledge system</strong> that processes team documentation into structured notes, creates skill-based topic links, and flags knowledge conflicts — enabling any LLM to query a self-organizing knowledge graph.</li>
+        <li>Built <strong>RAG pipelines for incident management</strong> (graph-based dependency retrieval, Qdrant) and customer support (Metaflow, Ray), reducing issue resolution time by 25% and improving on-call efficiency.</li>
+        <li>Engineered a <strong>multi-modal anomaly detection pipeline</strong> combining statistical time-series models and embedding-based signals, improving alert precision to 82% across 100K users.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">PyTorch</span><span class="exp-tag">MLflow</span><span class="exp-tag">AWS Bedrock</span>
+        <span class="exp-tag">SageMaker</span><span class="exp-tag">Qdrant</span><span class="exp-tag">RAG</span>
+        <span class="exp-tag">LLM Evaluation</span><span class="exp-tag">Ray</span><span class="exp-tag">Snowflake</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-item fade-up">
+    <div class="exp-meta">
+      <div class="exp-period">Jun – Sep 2024</div>
+      <div class="exp-company">Dragonfruit AI</div>
+      <div class="exp-loc">California, USA</div>
+    </div>
+    <div class="exp-content">
+      <h3>Software Engineering Intern</h3>
+      <p class="exp-desc">Computer vision pipelines, semi-synthetic data generation, and LLM inference optimization.</p>
+      <ul class="exp-bullets">
+        <li>Built a <strong>real-time computer vision pipeline</strong> using YOLO-based models and pose estimation for behavioral analysis — improving detection by 35% and reducing false positives by 50%.</li>
+        <li>Developed a <strong>scalable product recognition system</strong> combining keyword search and dense vector retrieval (Elasticsearch, Qdrant), processing 10K+ daily transactions with high accuracy.</li>
+        <li>Optimized <strong>LLM training and inference workflows</strong> using Ray, Kubernetes, and vLLM — reducing P95 inference latency by 20% and increasing deployment frequency by 25%.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">YOLO</span><span class="exp-tag">vLLM</span><span class="exp-tag">Kubernetes</span>
+        <span class="exp-tag">Ray</span><span class="exp-tag">Qdrant</span><span class="exp-tag">Elasticsearch</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-item fade-up">
+    <div class="exp-meta">
+      <div class="exp-period">May 2022 – May 2024</div>
+      <div class="exp-company">Arizona State University</div>
+      <div class="exp-loc">Tempe, AZ, USA</div>
+    </div>
+    <div class="exp-content">
+      <h3>Machine Learning Engineer</h3>
+      <p class="exp-desc">Research on few-shot learning, RLHF, and parameter-efficient fine-tuning for visual question answering.</p>
+      <ul class="exp-bullets">
+        <li>Conducted <strong>few-shot learning research for VQA</strong> using RLHF and PEFT, reducing training requirements by 80% vs. full fine-tuning baselines.</li>
+        <li>Published <strong>VQA-GEN benchmark at EMNLP 2023</strong> — a domain generalization evaluation dataset for visual question answering.</li>
+        <li>Published <strong>causal data fusion work at SBP-BRiMS 2022</strong> on multimodal disaster classification using social media signals.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">RLHF</span><span class="exp-tag">PEFT</span><span class="exp-tag">LoRA</span>
+        <span class="exp-tag">PyTorch</span><span class="exp-tag">HuggingFace</span><span class="exp-tag">VQA</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-item fade-up">
+    <div class="exp-meta">
+      <div class="exp-period">Jan 2021 – Jan 2022</div>
+      <div class="exp-company">MotorHealth</div>
+      <div class="exp-loc">Bengaluru, India</div>
+    </div>
+    <div class="exp-content">
+      <h3>Data Scientist</h3>
+      <ul class="exp-bullets">
+        <li>Developed <strong>time-series forecasting for pharmacy traffic prediction</strong> (XGBoost, ARIMA, Prophet).</li>
+        <li>Designed <strong>end-to-end data pipelines</strong> (dbt, Amazon EMR, SageMaker) integrating 15+ data sources, reducing analysis turnaround time by 70%.</li>
+        <li>Partnered cross-functionally with Product, SRE, and Customer Support to <strong>define ML success metrics</strong> and align model releases with customer-impacting initiatives.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">XGBoost</span><span class="exp-tag">ARIMA</span><span class="exp-tag">dbt</span>
+        <span class="exp-tag">Amazon EMR</span><span class="exp-tag">SageMaker</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-item fade-up">
+    <div class="exp-meta">
+      <div class="exp-period">Jun 2019 – Jun 2021</div>
+      <div class="exp-company">CommScope</div>
+      <div class="exp-loc">Bengaluru, India</div>
+    </div>
+    <div class="exp-content">
+      <h3>Software Development Engineer in Test</h3>
+      <ul class="exp-bullets">
+        <li>Built <strong>automated data pipelines in Python with Kubernetes and Ray</strong> to process large-scale TCP/UDP (L2/L3) network logs — enabling ML-based WiFi analytics and troubleshooting.</li>
+      </ul>
+      <div class="exp-tags">
+        <span class="exp-tag">Python</span><span class="exp-tag">Kubernetes</span><span class="exp-tag">Ray</span>
+        <span class="exp-tag">Network Analytics</span><span class="exp-tag">TCP/UDP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="section-header fade-up">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Research</h2>
+  </div>
+  <div class="pub-grid">
+    <div class="pub-card fade-up">
+      <div class="pub-venue">EMNLP 2023 · Conference Paper</div>
+      <h3>VQA-GEN: A Visual Question Answering Benchmark for Domain Generalization</h3>
+      <p>A benchmark dataset evaluating VQA model robustness across out-of-distribution visual and linguistic domains. Built to expose weaknesses in models that overfit to training domain patterns.</p>
+      <span class="pub-badge">Published</span>
+    </div>
+    <div class="pub-card fade-up" style="transition-delay:0.1s">
+      <div class="pub-venue">SBP-BRiMS 2022 · Conference Paper</div>
+      <h3>Causal Data Fusion for Multimodal Disaster Classification in Social Media</h3>
+      <p>An approach to multimodal disaster event classification using causal inference to fuse text and image signals from social media — improving classification reliability under noisy real-world conditions.</p>
+      <span class="pub-badge">Published</span>
+    </div>
+    <div class="pub-card patent fade-up" style="transition-delay:0.2s">
+      <div class="pub-venue">Patent · In Progress · 2025</div>
+      <h3>Intelligent Vector Database Architectures for Efficient Retrieval in RAG Systems</h3>
+      <p>Novel architecture designs for vector database indexing and query routing that improve retrieval latency and precision in production RAG pipelines at scale.</p>
+      <span class="pub-badge pending">Patent Pending</span>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header fade-up">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Skills</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-group fade-up">
+      <h4>LLM & Generative AI</h4>
+      <ul class="skill-list">
+        <li>GPT-4, Claude, LLaMA, BERT, T5</li>
+        <li>Fine-tuning: LoRA, QLoRA, SFT, RLHF, PEFT</li>
+        <li>RAG pipelines, agentic workflows</li>
+        <li>LangChain, LlamaIndex</li>
+        <li>LLM evaluation: RAGAS, LLM-as-judge</li>
+        <li>Prompt engineering, vLLM</li>
+        <li>Multimodal models, voice AI</li>
+        <li>Graph-based retrieval</li>
+      </ul>
+    </div>
+    <div class="skill-group fade-up" style="transition-delay:0.05s">
+      <h4>ML Frameworks & Libraries</h4>
+      <ul class="skill-list">
+        <li>PyTorch, TensorFlow</li>
+        <li>HuggingFace Transformers</li>
+        <li>scikit-learn, XGBoost</li>
+        <li>ARIMA, Prophet</li>
+        <li>Computer Vision: YOLO, OpenCV</li>
+        <li>Statistical modeling</li>
+      </ul>
+    </div>
+    <div class="skill-group fade-up" style="transition-delay:0.1s">
+      <h4>MLOps & Infrastructure</h4>
+      <ul class="skill-list">
+        <li>Ray, Metaflow, Airflow</li>
+        <li>MLflow, Kubeflow</li>
+        <li>SageMaker, AWS Bedrock, EMR</li>
+        <li>Kubernetes, Docker, Terraform</li>
+        <li>ArgoCD, dbt</li>
+        <li>Grafana, Datadog</li>
+      </ul>
+    </div>
+    <div class="skill-group fade-up" style="transition-delay:0.15s">
+      <h4>Vector Databases & Data</h4>
+      <ul class="skill-list">
+        <li>Qdrant, FAISS, Weaviate, Pinecone</li>
+        <li>Snowflake, Elasticsearch</li>
+        <li>Feature engineering, A/B testing</li>
+        <li>Webhook integration, REST APIs</li>
+        <li>Model evaluation & benchmarking</li>
+      </ul>
+    </div>
+    <div class="skill-group fade-up" style="transition-delay:0.2s">
+      <h4>Languages & Cloud</h4>
+      <ul class="skill-list">
+        <li>Python (primary)</li>
+        <li>Java, C++</li>
+        <li>AWS (Bedrock, SageMaker, EMR)</li>
+        <li>GCP, Docker, Kubernetes</li>
+      </ul>
+    </div>
+    <div class="skill-group fade-up" style="transition-delay:0.25s">
+      <h4>Research & Evaluation</h4>
+      <ul class="skill-list">
+        <li>Benchmark design (EMNLP published)</li>
+        <li>Few-shot & zero-shot learning</li>
+        <li>Causal inference, data fusion</li>
+        <li>Statistical significance testing</li>
+        <li>Semi-synthetic data generation</li>
+        <li>Embedding drift analysis</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header fade-up">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Get in Touch</h2>
+  </div>
+  <div class="contact-grid">
+    <div class="fade-up">
+      <p class="contact-body">
+        I'm open to conversations about senior ML engineering, evaluation infrastructure, and LLM systems roles — especially at the intersection of safety-critical applications and production AI.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:surajjunni52@gmail.com" class="contact-link">
+          <span class="link-icon">✉</span>
+          surajjunni52@gmail.com
+        </a>
+        <a href="tel:6023390539" class="contact-link">
+          <span class="link-icon">☏</span>
+          (602) 339-0539
+        </a>
+        <a href="https://www.linkedin.com/in/surajjunni/" target="_blank" class="contact-link">
+          <span class="link-icon">in</span>
+          linkedin.com/in/surajjunni
+        </a>
+        <a href="https://dblp.org/pid/353/1654.html" target="_blank" class="contact-link">
+          <span class="link-icon">∂</span>
+          DBLP Research Profile
+        </a>
+      </div>
+    </div>
+    <div class="contact-right fade-up" style="transition-delay:0.1s">
+      <div class="availability">
+        <div class="avail-label"><span class="avail-dot"></span>Open to Opportunities</div>
+        <p class="avail-text">
+          Currently based in <strong style="color:rgba(244,241,235,0.85)">California, USA</strong>. Open to senior ML engineering roles, evaluation infrastructure, and applied AI research positions — particularly in robotics, autonomous systems, and safety-critical AI.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Suraj Jyothi Unni · ML Engineer · 2026</p>
+  <p>surajjunni52@gmail.com</p>
+</footer>
+
+<script>
+  // Intersection Observer for fade-up animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Trigger visible for elements already in view on load
+  setTimeout(() => {
+    document.querySelectorAll('.fade-up').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) el.classList.add('visible');
+    });
+  }, 100);
+</script>
+</body>
+</html>
